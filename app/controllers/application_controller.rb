@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception, prepend: true
+  # load_and_authorize_resource
 
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -7,6 +8,20 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
+    attributes = [:name, :email, :password, :phone]
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email, :password, :phone])
+    devise_parameter_sanitizer.permit(:account_update, keys: attributes)
   end
+
+  private
+  
+  def current_cart
+    Cart.find_by(session[:cart_id])
+    rescue ActiveRecord::RecordNotFound
+      cart = Cart.create
+      session[:cart_id] = cart.id
+      cart
+  end
+  helper_method :current_cart
+
 end

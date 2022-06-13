@@ -1,0 +1,19 @@
+<h2>Edit </h2>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3-edit-user">
+    <%= form_for :author, url: {action: :update, controller: :authors}, method: :put do |f| %>
+        <h3 id="signup-form-admin">Update Author</h3>
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "form-control" %>
+      <%= f.label :country %>
+      <%= f.text_field :country, class: "form-control" %>
+      <%= f.label :age %><br />
+      <%= f.number_field :age, class: "form-control" %>
+      <div class="form-group row">
+        <div class="col-sm-10">
+          <button type="submit" class="btn btn-primary">Update author</button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

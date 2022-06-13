@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_date: 2022-06-03 09:55:19
+  end_date: 2022-06-03 09:55:19
+  status: MyString
+  quantity: 1
+  user: one
+  book: one
+
+two:
+  start_date: 2022-06-03 09:55:19
+  end_date: 2022-06-03 09:55:19
+  status: MyString
+  quantity: 1
+  user: two
+  book: two

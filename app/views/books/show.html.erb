@@ -1,0 +1,43 @@
+<% provide(:title, @book.title) %>
+<div>
+  <li><%= link_to "Trang chủ", root_path %></li>
+</div>
+<hr>
+<hr>
+<div>
+  <div>
+    <h2>
+      <%= @book.title %>
+    </h2>
+  </div>
+  <div>
+    <%= image_tag @book.image.url.to_s,class:"image_book" if @book.image? %>
+  </div>
+  <div>
+    <hr>
+      <h5>Tác giả:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+        <% @authors.each do |author| %>
+          <%= link_to author.name || "", author %>
+        <% end %>
+      </h5>
+    <hr>
+      <h5>Nhà xuất bản:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<%= link_to @publisher&.name || "", @publisher %></h5>
+    <hr>
+      <h5>Giá tiền:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<%= @book.price %></h5>
+    <hr>
+    <% if current_user.try(:admin?) %>
+      <ul>
+        <li><%= link_to "Edit book", edit_admin_book_path %></li>
+      </ul>
+    <% end %>
+  </div>
+  <div>
+    <h2><b>Giới Thiệu Truyện:</b></h2>
+  </div>
+  <div>
+    <h3>
+      <%= @book.description %>
+    </h3>
+  </div>
+  </div>
+</div>
