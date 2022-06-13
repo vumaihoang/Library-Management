@@ -6,13 +6,13 @@ class BooksController < ApplicationController
   end
 
   def show
-    if (Book.find_by id: params[:id]).nil?
+    @book = Book.find_by(id: params[:id])
+    if @book.nil?
       flash[:danger] = "Không Tồn Tại Sách!"
       redirect_to root_path
     else
-      @book = Book.find_by id: params[:id]
-      @authors = @book&.authors
-      @publishers = @book&.publishers
+      @authors = @book.authors
+      @publishers = @book.publishers
     end
   end
 end
