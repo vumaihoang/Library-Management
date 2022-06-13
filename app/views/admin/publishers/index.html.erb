@@ -1,0 +1,32 @@
+<% provide(:title, "All publishers") %>
+<h1>All publishers</h1>
+<table class="table table-striped table-hover table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Stt</th>
+      <th scope="col">Name</th>
+      <th scope="col">Address</th>
+      <th scope="col">Actions</th>
+      </tr>
+  </thead>
+  <% @publishers.each_with_index do |publisher, index| %>
+    <tbody>
+      <tr>
+        <th scope="row"><%= index +1 %></th>
+        <td> <%= link_to publisher.name, publisher %> </td>
+        <td> <%= publisher.address %> </td>
+        <td>
+          <%= link_to publisher_path(publisher) do %>
+            <i class="fa fa-eye "  ></i>
+          <% end %>
+          <%= link_to edit_admin_publisher_path(publisher.id) do %>
+            <i class="fa fa-pencil icon_edit" aria-hidden="true" ></i>
+          <% end %>
+          <%= link_to admin_destroy_publisher_path(publisher), method: :delete do %>
+            <i class="fa fa-trash icon_delete" ></i>
+          <% end %>
+        </td>
+      </tr>
+    </tbody>
+  <% end %>
+</table>

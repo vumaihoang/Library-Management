@@ -1,0 +1,21 @@
+<%provide(:title, "Create Author")%>
+<h1>Create Author</h1>
+<div class="row">
+  <div class="form-group col-md-6">
+    <%= form_for @author, url: admin_authors_path, method: :post do |f| %>
+      <%= f.hidden_field :user_id, value: current_user.id %>
+      <%= f.label :name %><br />
+      <%= f.text_field :name, class: "form-control" %>
+      <%= f.label :country %><br />
+      <%= f.text_field :country, class: "form-control" %>
+      <%= f.label :age %><br />
+      <%= f.number_field :age, class: "form-control" %>
+      <div class="form-group row">
+        <div class="col-sm-10">
+          <button type="submit" class="btn btn-primary">Create author</button>
+          <%= link_to "Back", new_admin_book_path, class: "btn btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

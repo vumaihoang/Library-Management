@@ -1,0 +1,31 @@
+<%provide(:title, "Create Book")%>
+<h1>Create Book</h1>
+<div class="row">
+  <div class="form-group col-md-6">
+    <%= form_for @book, url: admin_books_path, method: :post, :html => {:multipart => true} do |f| %>
+      <%= f.hidden_field :user_id, value: current_user.id %>
+      <%= f.label :title %><br />
+      <%= f.text_field :title, class: "form-control" %>
+      <%= f.label :description %><br />
+      <%= f.text_field :description, class: "form-control" %>
+      <%= f.label :price %><br />
+      <%= f.number_field :price, class: "form-control" %>
+      <%= f.file_field :image %>
+      <%= f.label "Available" %>
+      <%= f.radio_button(:role, "available") %>
+      <%= f.label "Unavailable", class: "label_role" %>
+      <%= f.radio_button(:role, "unavailable") %>
+      <h2>Author</h2>
+      <%= f.select :author_ids, options_for_select(Author.all.map {|author| [author.name, author.id]}), {}, multiple: true %>
+      <%= link_to "Create author", new_admin_author_path , class: "btn btn-primary" %>
+      <h2>Publisher</h2>
+      <%= f.select :publisher_ids, options_for_select(Publisher.all.map {|publisher| [publisher.name, publisher.id]}), {}, multiple: true %>
+      <%= link_to "Create publisher", new_admin_publisher_path , class: "btn btn-primary" %>
+      <div class="form-group row">
+        <div class="col-sm-10">
+          <button type="submit" class="btn btn-primary">Create my book</button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
