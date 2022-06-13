@@ -12,8 +12,7 @@ class BooksController < ApplicationController
     else
       @book = Book.find_by id: params[:id]
       @authors = @book&.authors
-      book_publishers = BookPublisher.find_by(book_id: @book.id)
-      @publisher = book_publishers&.publisher
+      @publishers = @book&.publishers
     end
   end
 end

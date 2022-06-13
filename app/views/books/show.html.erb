@@ -15,13 +15,25 @@
   </div>
   <div>
     <hr>
-      <h5>Tác giả:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-        <% @authors.each do |author| %>
-          <%= link_to author.name || "", author %>
+      <h5>Tác giả:&nbsp&nbsp&nbsp&nbsp
+        <% @authors.each_with_index do |author, index| %>
+          <% if index == @authors.size - 1 %>
+            <%= link_to author.name || "", author %>
+          <% else %>
+            <%= link_to author.name + "," || "", author %>
+          <% end %>
         <% end %>
       </h5>
     <hr>
-      <h5>Nhà xuất bản:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<%= link_to @publisher&.name || "", @publisher %></h5>
+      <h5>Nhà xuất bản:&nbsp&nbsp&nbsp
+      <% @publishers.each_with_index do |publisher, index| %>
+        <% if index == @publishers.size - 1 %>
+          <%= link_to publisher.name || "", publisher %>
+        <% else %>
+          <%= link_to publisher.name + "," || "", publisher%>
+        <% end %>
+      <% end %>
+      </h5>
     <hr>
       <h5>Giá tiền:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<%= @book.price %></h5>
     <hr>
