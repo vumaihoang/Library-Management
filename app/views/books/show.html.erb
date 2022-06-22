@@ -1,8 +1,4 @@
 <% provide(:title, @book.title) %>
-<div>
-  <li><%= link_to "Trang chủ", root_path %></li>
-</div>
-<hr>
 <hr>
 <div>
   <div>
@@ -15,20 +11,22 @@
   </div>
   <div>
     <hr>
-      <h5>Tác giả:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-        <% @authors.each do |author| %>
-          <%= link_to author.name || "", author %>
-        <% end %>
+      <h5>Tác giả:&nbsp&nbsp&nbsp&nbsp
+      <% @authors.map do |author| %>
+        <%= link_to author.name, author %>
+      <% end %>
       </h5>
     <hr>
-      <h5>Nhà xuất bản:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<%= link_to @publisher&.name || "", @publisher %></h5>
+      <h5>Nhà xuất bản:&nbsp&nbsp&nbsp
+      <% @publishers.map do |publisher| %>
+        <%= link_to publisher.name, publisher%>
+      <% end %>
+      </h5>
     <hr>
       <h5>Giá tiền:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<%= @book.price %></h5>
     <hr>
     <% if current_user.try(:admin?) %>
-      <ul>
-        <li><%= link_to "Edit book", edit_admin_book_path %></li>
-      </ul>
+      <%= link_to "Edit book", edit_admin_book_path, class: "btn btn-primary" %>
     <% end %>
   </div>
   <div>

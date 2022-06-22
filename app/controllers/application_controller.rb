@@ -14,14 +14,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  
-  def current_cart
-    Cart.find_by(session[:cart_id])
-    rescue ActiveRecord::RecordNotFound
-      cart = Cart.create
-      session[:cart_id] = cart.id
-      cart
-  end
-  helper_method :current_cart
 
+  def current_cart
+    Cart.find_by(user_id: current_user.id)
+  end
+
+  helper_method :current_cart
 end

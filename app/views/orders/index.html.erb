@@ -1,22 +1,15 @@
 <% provide(:title, "Order") %>
-<div id="text-show-1">
-  <li><%= link_to "Home", root_path %></li>
-</div>
-<div id="text-show-2">
-  <h6> &nbsp>>&nbsp<%= "Delivery" %></h6>
-</div>
-<hr>
-<hr>
 <div id="text-index-3">
   <h4><b><%= "Delivery" %></b></h4>
 </div>
-<hr>
 <table class="table table-striped table-hover table-bordered">
   <tr id="th-table">
     <th>Name </th>
     <th>Book title</th>
     <th>Address</th>
+    <th>Price</th>
     <th>Email</th>
+    <th>Order Time</th>
     <th>Status</th>
     <% if current_user&.admin? %>
      <th>Admin</th>
@@ -25,16 +18,21 @@
   <% @orders.each do |order| %>
     <tr>
       <td id="th-table-1"><%= order.name %></td>
-      <% @cart.each do |item| %>
-        <td id="th-table-1"><%= item.book.title %></td>
-      <% end %>
+      <td id="th-table-1">
+        <% order.line_items.each do |line_item| %>
+          <%= line_item.quantity.to_s + "x " + line_item.book.title %><br>
+        <% end %>
+      </td>
       <td id="th-table-2"><%= order.address %></td>
+      <td class="total_cell"><%= number_to_currency(order.total_price, unit: '', precision: 0) %></td>
       <td id="th-table-2"><%= order.email %></td>
+      <td id="th-table-2"><%= order.created_at.strftime("%Y-%m-%d") %></td>
       <td id="th-table-2"><%= order.status %></td>
       <% if current_user&.admin? %>
-        <td id="th-table-2"><%= link_to "cartonfirm_delivered", orders_active_path(order_id: order.id) %> </td>
+        <td id="th-table-2"><%= link_to "Confirm Deliver", orders_active_path(order_id: order.id) %> </td>
       <% end %>
     </tr>
   <% end %>
 </table>
 <br>
+<p><%= will_paginate @orders %></p>

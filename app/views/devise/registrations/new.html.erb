@@ -4,18 +4,18 @@
 
   <div class="row">
     <div class="form-group col-md-6">
-      <%= f.label :name %><br />
+      <%= f.label :name %>
       <%= f.text_field :name, class: "form-control" %>
-      <%= f.label :email %><br />
+      <%= f.label :email %>
       <%= f.email_field :email, class: "form-control" %>
-      <%= f.label :phone %><br />
+      <%= f.label :phone %>
       <%= f.telephone_field :phone, class: "form-control" %>
       <%= f.label :password %>
         <% if @minimum_password_length %>
           <em>(<%= @minimum_password_length %> characters minimum)</em>
-        <% end %><br />
+        <% end %>
       <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
-      <%= f.label :password_confirmation %><br />
+      <%= f.label :password_confirmation %>
       <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
     </div>
   </div>

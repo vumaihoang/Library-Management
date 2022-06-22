@@ -1,4 +1,4 @@
-class Admin::PublishersController < ApplicationController
+class Admin::PublishersController < AdminController
   before_action :get_publisher, only: [:show, :update, :destroy, :edit]
 
   def index
@@ -13,7 +13,7 @@ class Admin::PublishersController < ApplicationController
     @publisher = Publisher.new(publisher_params)
     if @publisher.save
       flash[:success] = "Publisher successfully created"
-      redirect_to root_path
+      redirect_to admin_publishers_path
     else
       flash[:error] = "Something went wrong"
       render "new"
@@ -24,7 +24,6 @@ class Admin::PublishersController < ApplicationController
   end
 
   def update
-    @publisher = Publisher.find(params[:id])
     if @publisher.update(publisher_params)
       flash[:success] = "Publisher updated"
       redirect_to admin_publishers_path
@@ -34,15 +33,19 @@ class Admin::PublishersController < ApplicationController
   end
 
   def destroy
-    Publisher.find(params[:id]).destroy
-    flash[:success] = "Publisher deleted"
+    if @publisher.present?
+      @publisher.destroy
+      flash[:success] = "Publisher deleted"
+    else
+      flash[:error] = "Can not delete publisher!"
+    end
     redirect_to admin_publishers_url
   end
 
   private
 
   def get_publisher
-    @publisher = Publisher.find(params[:id])
+    @publisher = Publisher.find_by(id: params[:id])
   end
 
   def publisher_params

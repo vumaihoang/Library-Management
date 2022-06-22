@@ -7,8 +7,13 @@ class LineItemsController < ApplicationController
 
   def create
     @cart = current_cart
-    book = Book.find(params[:book_id])
+    book = Book.find_by(id: params[:book_id])
     @line_item = @cart.add_book(book.id)
+    if @line_item.quantity > book.quantity
+      flash[:error] = "Out of books"
+      return redirect_to books_path
+    end
+    @line_item.update(price: book.price * @line_item.quantity)
     if @line_item.save
       flash[:success] = "Create cart success!"
       redirect_to @line_item.cart
@@ -33,7 +38,7 @@ class LineItemsController < ApplicationController
   private
 
   def set_line_item
-    @line_item = LineItem.find(params[:id])
+    @line_item = LineItem.find_by(id: params[:id])
   end
 
   def line_item_params

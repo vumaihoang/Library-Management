@@ -1,14 +1,17 @@
 class CartsController < ApplicationController
   def show
-    @cart = Cart.find(params[:id])
+    @cart = Cart.find_by(id: params[:id])
+    line_items = @cart.line_items
+    @line_items = line_items.with_status
+    @quantity = @line_items.pluck(:quantity).sum
   end
 
   def destroy
     @cart = current_cart
-    @cart.destroy
-    session[:cart_id] = nil
+    line_items = @cart.line_items.with_status
+    line_items.delete_all
     flash[:success] = "Cart clear!"
-    redirect_to books_url
+    redirect_to cart_url
   end
 
   def index

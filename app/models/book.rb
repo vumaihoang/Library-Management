@@ -4,7 +4,7 @@ class Book < ApplicationRecord
   has_many :authors, through: :author_books
   has_many :book_publishers, dependent: :destroy
   has_many :publishers, through: :book_publishers
-  has_many :line_items
+  has_many :line_items, dependent: :destroy
 
   accepts_nested_attributes_for :authors, :publishers, :author_books, :book_publishers
 

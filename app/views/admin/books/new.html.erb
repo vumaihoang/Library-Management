@@ -10,20 +10,27 @@
       <%= f.text_field :description, class: "form-control" %>
       <%= f.label :price %><br />
       <%= f.number_field :price, class: "form-control" %>
+      <%= f.label :quantity %><br />
+      <%= f.number_field :quantity, class: "form-control" %><br />
       <%= f.file_field :image %>
       <%= f.label "Available" %>
       <%= f.radio_button(:role, "available") %>
       <%= f.label "Unavailable", class: "label_role" %>
       <%= f.radio_button(:role, "unavailable") %>
       <h2>Author</h2>
-      <%= f.select :author_ids, options_for_select(Author.all.map {|author| [author.name, author.id]}), {}, multiple: true %>
-      <%= link_to "Create author", new_admin_author_path , class: "btn btn-primary" %>
+      <div class="form-group">
+        <%= f.select :author_ids, options_for_select(Author.all.map {|author| [author.name, author.id]}), {}, multiple: true, class: "form-control select2" %>
+      </div>
+      <%= link_to "Create author", new_admin_author_path , class: "btn btn-primary", style:"margin-left: 556px;margin-top: -85px;" %>
       <h2>Publisher</h2>
-      <%= f.select :publisher_ids, options_for_select(Publisher.all.map {|publisher| [publisher.name, publisher.id]}), {}, multiple: true %>
-      <%= link_to "Create publisher", new_admin_publisher_path , class: "btn btn-primary" %>
+      <div class="form-group">
+        <%= f.select :publisher_ids, options_for_select(Publisher.all.map {|publisher| [publisher.name, publisher.id]}), {}, multiple: true, class: "form-control select2" %>
+      </div>
+      <%= link_to "Create publisher", new_admin_publisher_path, class: "btn btn-primary", style:"margin-left: 556px;margin-top: -85px;" %>
       <div class="form-group row">
         <div class="col-sm-10">
-          <button type="submit" class="btn btn-primary">Create my book</button>
+          <button type="submit" class="btn btn-primary", style="margin-top: -20px;">Create my book</button>
+          <%= link_to "Back", root_path, class: "btn btn-primary", style: "margin-top: -20px;" %>
         </div>
       </div>
     <% end %>
