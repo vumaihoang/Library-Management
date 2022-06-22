@@ -1,5 +1,10 @@
 <% provide(:title, "All users") %>
+<div style="display: flex; justify-content: space-between; align-items: center">
 <h1>All users</h1>
+<% if current_user.admin? %>
+    <%= link_to "Create User", new_admin_user_path, class: "btn btn-primary" %>
+  <% end %>
+</div>
 <table class="table table-striped table-hover table-bordered">
     <thead>
       <tr>

@@ -9,8 +9,10 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 require('jquery')
 require('bootstrap')
-
+require('select2')
 
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+require('./select')

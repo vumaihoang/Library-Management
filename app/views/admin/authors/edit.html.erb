@@ -1,8 +1,7 @@
-<h2>Edit </h2>
+<h2>Update Author</h2>
 <div class="row">
   <div class="col-md-6 col-md-offset-3-edit-user">
     <%= form_for :author, url: {action: :update, controller: :authors}, method: :put do |f| %>
-        <h3 id="signup-form-admin">Update Author</h3>
       <%= f.label :name %>
       <%= f.text_field :name, class: "form-control" %>
       <%= f.label :country %>

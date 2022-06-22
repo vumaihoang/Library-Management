@@ -1,4 +1,4 @@
-class Admin::AuthorsController < ApplicationController
+class Admin::AuthorsController < AdminController
   before_action :get_author, only: [:show, :update, :destroy, :edit]
 
   def index
@@ -13,7 +13,7 @@ class Admin::AuthorsController < ApplicationController
     @author = Author.new(author_params)
     if @author.save
       flash[:success] = "Author successfully created"
-      redirect_to root_path
+      redirect_to admin_authors_path
     else
       flash[:error] = "Something went wrong"
       render "new"
@@ -24,7 +24,6 @@ class Admin::AuthorsController < ApplicationController
   end
   
   def update
-    @author = Author.find(params[:id])
     if @author.update(author_params)
       flash[:success] = "Author updated"
       redirect_to admin_authors_path
@@ -34,15 +33,19 @@ class Admin::AuthorsController < ApplicationController
   end
 
   def destroy
-    Author.find(params[:id]).destroy
-    flash[:success] = "Author deleted"
+    if @author.present?
+      @author.destroy
+      flash[:success] = "Author deleted"
+    else
+      flash[:error] = "Can not delete author!"
+    end
     redirect_to admin_authors_url
   end
 
   private
 
   def get_author
-    @author = Author.find(params[:id])
+    @author = Author.find_by(id: params[:id])
   end
 
   def author_params

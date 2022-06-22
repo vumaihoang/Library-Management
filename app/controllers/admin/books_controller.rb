@@ -1,6 +1,5 @@
-class Admin::BooksController < ApplicationController
+class Admin::BooksController < AdminController
   before_action :get_book, only: [:show, :update, :destroy, :edit]
-
   def new
     @book = Book.new
   end
@@ -9,7 +8,7 @@ class Admin::BooksController < ApplicationController
     @book = Book.new(book_params)
     if @book.save
       flash[:success] = "Book successfully created"
-      redirect_to root_path
+      redirect_to books_path
     else
       flash[:error] = "Something went wrong"
       render "new"
@@ -20,7 +19,6 @@ class Admin::BooksController < ApplicationController
   end
 
   def update
-    @book = Book.find(params[:id])
     if @book.update(book_params)
       flash[:success] = "Book updated"
       redirect_to books_path
@@ -30,19 +28,23 @@ class Admin::BooksController < ApplicationController
   end
 
   def destroy
-    Book.find(params[:id]).destroy
-    flash[:success] = "Book deleted"
+    if @book.present?
+      @book.destroy
+      flash[:success] = "Book deleted"
+    else
+      flash[:error] = "Can not delete book!"
+    end
     redirect_to books_url
   end
 
   private
 
   def get_book
-    @book = Book.find(params[:id])
+    @book = Book.find_by(id: params[:id])
   end
 
   def book_params
-    params.require(:book).permit(:title, :description, :price, :image, :user_id, :role, author_ids: [], publisher_ids: [],
+    params.require(:book).permit(:title, :description, :price, :image, :quantity, :user_id, :role, author_ids: [], publisher_ids: [],
       author_books_attributes: [:id, :book_id, :author_id],
       authors_attributes: [:id, :name, :country, :age],
       book_publishers_attributes: [:id, :book_id, :publisher_id],

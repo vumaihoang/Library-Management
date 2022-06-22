@@ -1,8 +1,4 @@
 <% provide(:title, @book.title) %>
-<div>
-  <li><%= link_to "Trang chủ", root_path %></li>
-</div>
-<hr>
 <hr>
 <div>
   <div>
@@ -30,9 +26,7 @@
       <h5>Giá tiền:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<%= @book.price %></h5>
     <hr>
     <% if current_user.try(:admin?) %>
-      <ul>
-        <li><%= link_to "Edit book", edit_admin_book_path %></li>
-      </ul>
+      <%= link_to "Edit book", edit_admin_book_path, class: "btn btn-primary" %>
     <% end %>
   </div>
   <div>

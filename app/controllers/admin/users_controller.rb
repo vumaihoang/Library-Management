@@ -1,8 +1,7 @@
-class Admin::UsersController < ApplicationController
+class Admin::UsersController < AdminController
   before_action :get_user, only: [:show, :update, :destroy, :edit]
-
   def index
-    @users = User.all.paginate(:page => params[:page], :per_page => 3).order('created_at desc')
+    @users = User.all.paginate(:page => params[:page], :per_page => 5).order('created_at desc')
   end
 
   def new
@@ -13,7 +12,7 @@ class Admin::UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       flash[:success] = "User successfully created"
-      redirect_to root_path
+      redirect_to admin_users_path
     else
       flash[:error] = "Something went wrong"
       render "new"
@@ -24,7 +23,6 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:success] = "Profile updated"
       redirect_to admin_users_path
@@ -34,15 +32,19 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = "User deleted"
+    if @user.present? && !@user.admin?
+      @user.destroy
+      flash[:success] = "User destroyed."
+    else
+      flash[:error] = "Can not delete account!"
+    end
     redirect_to admin_users_url
   end
 
   private
 
   def get_user
-    @user = User.find(params[:id])
+    @user = User.find_by(id: params[:id])
   end
 
   def user_params

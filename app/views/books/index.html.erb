@@ -1,5 +1,10 @@
 <% provide(:title, "All books") %>
-<h1><%= link_to "All Books", books_path %></h1>
+<div style="display: flex; justify-content: space-between; align-items: center">
+  <h1>All Books</h1>
+  <% if current_user.admin? %>
+    <%= link_to "Create Book", new_admin_book_path, class: "btn btn-primary" %>
+  <% end %>
+</div>
 <%= search_form_for @q, url: books_path, method: :get do |f| %>
     <%= f.label :title_cont,"Search book" %>
     <%= f.search_field :title_cont %>
@@ -12,6 +17,7 @@
     <tr>
       <th scope="col">Stt</th>
       <th scope="col">Title</th>
+      <th scope="col">Quantity</th>
       <th scope="col">Image</th>
       <th scope="col">Description</th>
       <th scope="col">Price</th>
@@ -25,26 +31,29 @@
       <tr>
         <th scope="row"><%= index +1 %></th>
         <td> <%= link_to book.title, book %> </td>
+        <td> <%= book.quantity %> </td>
         <td> 
           <%= image_tag book.image_url.to_s, class: "image_book" %>
         </td>
         <td> <%= book.description %></td>
-        <td> <%= book.price %></td>
+        <td> <%= number_to_currency(book.price, unit: '', precision: 0) %></td>
         <td> <%= book.role %></td>
-        <td>
+        <td style="padding-left: 2px;">
           <%= link_to book_path(book) do %>
             <i class="fa fa-eye "  ></i>
           <% end %>
-          <%= link_to edit_admin_book_path(book.id) do %>
-            <i class="fa fa-pencil icon_edit" aria-hidden="true" ></i>
-          <% end %>
-          <%= link_to admin_destroy_book_path(book), method: :delete, data: {confirm: "You sure?"} do %>
-            <i class="fa fa-trash icon_delete" ></i>
+          <% if current_user.admin? %>
+            <%= link_to edit_admin_book_path(book.id) do %>
+              <i class="fa fa-pencil icon_edit" aria-hidden="true" ></i>
+            <% end %>
+            <%= link_to admin_destroy_book_path(book), method: :delete, data: {confirm: "You sure?"} do %>
+              <i class="fa fa-trash icon_delete" ></i>
+            <% end %>
           <% end %>
         </td>
         <td>
         <div id="button-cart">
-            <%= button_to "add cart", line_items_path(:book_id => book), class: "btn btn-primary"%>
+            <%= button_to "add cart", line_items_path(book_id: book.id), class: "btn btn-primary"%>
           </div>
         </td>
       </tr>

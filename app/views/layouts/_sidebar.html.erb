@@ -1,0 +1,43 @@
+<% if current_user.present? %>
+  <div id="sidebar">
+    <header>
+      <a href="#">My App</a>
+    </header>
+    <ul class="nav">
+      <li>
+      <a href="<%= books_path(@books)%>">
+          <i class="zmdi zmdi-view-dashboard"></i> Book
+      </a>
+      </li>
+      <li>
+      <a href="<%= orders_path(@orders)%>">
+          <i class="zmdi zmdi-link"></i> Order
+      </a>
+      </li>
+      <% if user_signed_in? %>
+      <li>
+      <a href="<%= cart_path(current_cart) %>">
+          <i class="zmdi zmdi-widgets"></i> Cart
+      </a>
+      </li>
+      <% end %>
+      <% if current_user&.admin? %>
+        <li>
+        <a href="<%= admin_users_path(@users) %>">
+            <i class="zmdi zmdi-widgets"></i> User
+        </a>
+        </li>
+        <li>
+        <a href="<%= admin_authors_path(@authors) %>">
+            <i class="zmdi zmdi-widgets"></i> Author
+        </a>
+        </li>
+        <li>
+        <a href="<%= admin_publishers_path(@publishers) %>">
+            <i class="zmdi zmdi-widgets"></i> Publisher
+        </a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

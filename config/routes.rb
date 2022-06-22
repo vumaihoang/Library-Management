@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-
-  root "static_pages#home"
+  root "books#index"
   get "static_pages/help"
   get "orders_active", to: "orders#active"
 
